@@ -1,0 +1,41 @@
+version: '2'
+services:
+  web:
+    restart: always
+    build: ./web
+    expose:
+      - "8000"
+    ports:
+      - "2223:22"
+    links:
+      - mongodb:mongodb
+    volumes:
+      - /usr/src/app/app/static
+    env_file:
+      - ./mongodb/.after_build_env
+      - ./web/.after_build_env
+    depends_on:
+        - mongodb
+    command: /bin/bash -c "sleep 10; /usr/bin/supervisord"
+
+  nginx:
+    restart: always
+    build: ./nginx/
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /www/static
+    volumes_from:
+      - web
+    links:
+      - web:web
+    command: /usr/sbin/nginx
+
+  mongodb:
+    restart: always
+    image: mongodb
+    env_file: ./mongodb/.after_build_env
+
+
+#http://containertutorials.com/docker-compose/nginx-flask-postgresql.html
