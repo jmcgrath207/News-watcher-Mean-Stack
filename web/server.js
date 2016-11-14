@@ -87,11 +87,6 @@ app.get('/', function(req, res) {
     res.render('index.html')
 });
 
-// For loading the default HTML page that acts as the SPA Web site
-app.get('/', function(req, res) {
-    res.render('index.html')
-});
-
 //
 // Rest API routes
 app.use('/api/users', users);
