@@ -37,3 +37,7 @@ jspm_packages
 .node_repl_history
 
 .idea/
+/web/config.js
+web/test.js
+web/test_2.js
+web/web.zip
