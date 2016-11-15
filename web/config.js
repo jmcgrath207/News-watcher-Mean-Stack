@@ -3,7 +3,7 @@
  */
 var config = {};
 
-config.MONGODB_CONNECT_URL = "mongodb://<username>:<password>@ds015710.mlab.com:15710/newswatcherdb";
+config.MONGODB_CONNECT_URL = "mongodb://<username>:<password>@<url:port>/</uri>";
 config.JWT_SECRET = "<yoursecretkey>";
 config.NEWYORKTIMES_API_KEY = "<yoursecretkey>";
 config.NEWYORKTIMES_CATEGORIES = ["world", "national", "business", "technology"];
