@@ -2,8 +2,19 @@
  * Created by john on 11/13/16.
  */
 var config = {};
+var ping = require('ping');
 
-config.MONGODB_CONNECT_URL = "mongodb://<username>:<password>@<url:port>/</uri>";
+
+//check for mongodb container, if not then use address
+if (ping.sys.probe('mongodb')) {
+    config.MONGODB_CONNECT_URL = "mongodb://<username>:<password>@<url:port>/</uri>";
+}
+else {
+    config.MONGODB_CONNECT_URL = "mongodb://<username>:<password>@<url:port>/</uri>";
+
+}
+
+
 config.JWT_SECRET = "<yoursecretkey>";
 config.NEWYORKTIMES_API_KEY = "<yoursecretkey>";
 config.NEWYORKTIMES_CATEGORIES = ["world", "national", "business", "technology"];

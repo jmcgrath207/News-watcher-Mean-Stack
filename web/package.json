@@ -29,6 +29,7 @@
     "kerberos": "0.0.18",
     "mongodb": "^2.1.5",
     "morgan": "^1.6.1",
+    "ping": "^0.2.1",
     "response-time": "^2.3.1"
   },
   "devDependencies": {

@@ -5,18 +5,16 @@ services:
     build: ./web
     expose:
       - "8000"
-    ports:
-      - "2223:22"
     links:
       - mongodb:mongodb
     volumes:
-      - /usr/src/app/app/static
+      - /usr/src/app/static
     env_file:
       - ./mongodb/.after_build_env
       - ./web/.after_build_env
     depends_on:
         - mongodb
-    command: /bin/bash -c "sleep 10; /usr/bin/supervisord"
+    command: node server.js
 
   nginx:
     restart: always
