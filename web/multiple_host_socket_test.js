@@ -2,15 +2,15 @@
  * Created by john on 11/17/16.
  */
 net = require('net');
-async = require("async");
+var eachOfSeries = require('async/eachOfSeries');
 
 client = new net.Socket;
-hosts = ['google.com','yahoo.com',''];
+hosts = {'google.com': '443'};
 
 
 
-async.eachSeries(hosts, function(host,callback) {
-    client.connect(443, host, function() {
+eachOfSeries(hosts, function(port,host,callback) {
+    client.connect(port, host, function() {
         console.log('Connected to : ' + host);
         client.destroy();
         callback()
