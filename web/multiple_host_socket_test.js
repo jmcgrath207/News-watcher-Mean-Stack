@@ -1,45 +1,31 @@
 /**
  * Created by john on 11/17/16.
  */
-net = require('net');
-var eachOfSeries = require('async/eachOfSeries');
 
-client = new net.Socket;
-hosts = {'google.com': '443'};
+var async = require('async');
+var net = require('net');
 
+hosts = { 'msn.com': '444', 'google.com': '443', 'yahoo.com': '81' };
 
+var timeout;
 
-eachOfSeries(hosts, function(port,host,callback) {
-    client.connect(port, host, function() {
-        console.log('Connected to : ' + host);
-        client.destroy();
-        callback()
+async.eachOfSeries(hosts, function (port, host, callback) {
+    client = new net.Socket;
+
+    timeout = client.setTimeout(1000, function () {
+        console.log("Timeout has occurred")
     });
-});
 
-
-client.setTimeout(1000, function () {
-    console.log("Timeout has occurred")
-});
-
-client.on('data', function(data) {
-    console.log('Received: ' + data);
-    client.destroy(); // kill client after server's response
-});
-
-client.on('timeout', function() {
-    console.log('client has timed out');
-    client.destroy(); // kill client after server's response
-});
-
-client.on('close', function() {
-    console.log('Connection closed');
-});
-
-client.on('error', function (err) {
-    console.log('there was a error' + err);
-    client.destroy(); // kill client after server's response
-
+    client.connect(port, host, function () {
+        clearTimeout(timeout);
+        console.log('Connected to  ' + host + " on port " + port);
+        client.destroy();
+        callback();
+    }).on('timeout', function () {
+        console.log('client has timed out');
+        client.destroy();
+        callback();
+    });
 });
 
 
